@@ -22,8 +22,7 @@ public class GenreRepository(SpotifyContext spotifyContext) : IGenreRepository
         await spotifyContext.SaveChangesAsync();
     }
 
-    [HttpDelete("{id}")]
-    [ActionName(nameof(DeleteByIdAsync))]
+
     public async Task DeleteByIdAsync(int id)
     {
         var genre = await spotifyContext.Genres.SingleAsync(genre => genre.Id == id);
@@ -41,8 +40,7 @@ public class GenreRepository(SpotifyContext spotifyContext) : IGenreRepository
                  })
              .ToListAsync();
 
-    [HttpGet("{id}")]
-    [ActionName(nameof(GetByIdAsync))]
+
     public async Task<GenreDto> GetByIdAsync(int id) =>
         await spotifyContext.Genres.Select(
              genre =>
@@ -54,12 +52,11 @@ public class GenreRepository(SpotifyContext spotifyContext) : IGenreRepository
         .SingleAsync(genre => genre.Id == id);
 
 
-    [HttpPut]
-    [ActionName(nameof(UpdateAsync))]
+
     public async Task UpdateAsync([FromBody] UpdateGenreDto updateGenreDto)
     {
-        var genre = await spotifyContext.Groups
-            .SingleAsync(genre => genre.Id == updateGenreDto.Id);
+        var genre = await spotifyContext.Genres
+            .SingleAsync(genre => genre.Title == "MyNewGenre1111111111");
 
         genre.Title = updateGenreDto.Title;
         await spotifyContext.SaveChangesAsync();
